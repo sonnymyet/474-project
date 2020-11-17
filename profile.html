@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/main.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
@@ -27,23 +26,25 @@
 
       <div class="right-container">
         <div class="right-inner-container">
+            <form id="registrationForm">
+                <div class="login-header">
+                    Update Profile
+                </div>
+                <div class="login-body">
+                    <input class="login-field" type="name" id="nameUpdate" placeholder="Name" pattern=".*">
+                    <input class="login-field" type="email" id="emailUpdate" placeholder="Email" pattern=".*">
+                    <input class="login-field" type="role" id="roleUpdate" placeholder="Role" pattern=".*">
 
-          <header class="site-header">
-            <h1 class="title">474 Project</h1>
-            <nav class="site-nav">
-              <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="register.html">Register Account</a></li>
-                <li><a href="profile.html">Profile</a></li>
-              </ul>
-            </nav>
-            <button type="button" class="btn-menu"><span>Menu</span></button>
-            <a class="home-button" href="register.html">Register</a>
-          </header>
+                    <input class="login-btn" type="submit" value="UpdateProfile">
+                </div>
+            </form>
+            
+            <a href="/index.html"><button type="button" class="login-btn">Cancel</button></a>
 
         </div>
       </div>
     </div>
+
 
 
     <script src="js/vendor/jquery-3.1.0.js"></script>
