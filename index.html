@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/layout.css">
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
@@ -27,24 +26,34 @@
 
       <div class="right-container">
         <div class="right-inner-container">
+            <form id="registrationForm">
+                <div class="login-header">
+                    Sign up
+                </div>
+                <div class="login-body">
+                    <input class="login-field" type="email" id="emailInputRegister" placeholder="Email" pattern=".*" required>
+                    <input class="login-field" type="password" id="passwordInputRegister" placeholder="Password" pattern=".*" required>
+                    <input class="login-field" type="password" id="password2InputRegister" placeholder="Confirm Password" pattern=".*" required>
 
-          <header class="site-header">
-            <h1 class="title">474 Project</h1>
-            <nav class="site-nav">
-              <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="about.html">About</a></li>
-              </ul>
-            </nav>
-
-            <a href="/signin.html"><button type="button" class="btn-menu">Sign In</button></a>
-            <a href="/register.html"><button type="button" class="btn-menu">Register</button></a>
-          </header>
-
+                    <input class="login-btn" type="submit" value="Register">
+                </div>
+            </form>
+            <br/>
+            <br/>
+            <a href="/signin.html">Already have an account?</a>
         </div>
       </div>
     </div>
+
+
+    <form id="aboutForm">
+        <div>
+            Sonny's Test
+        </div>
+        <div>
+            <input type="submit" value="Test">
+        </div>
+    </form>
 
 
     <script src="js/vendor/jquery-3.1.0.js"></script>
