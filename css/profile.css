@@ -1,0 +1,43 @@
+.profile-container {
+    margin-top: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px;
+    min-width: 800px;
+    margin-bottom: 100px;
+}
+
+html {
+    height: 100%;
+
+}
+
+body {
+    height: 100%;
+    background-color: #eee;
+}
+
+.profile-input-header {
+    margin-top: 7px;
+}
+
+.profile-contact-info {
+    font-size: 14px;
+    margin-top: 25px;
+}
+
+.profile-header {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding-bottom: 20px;
+}
+
+.profile-edit-save {
+    margin-right: 15px;
+}
+
+.profile-edit-cancel {
+    margin-right: 20px;
+}
