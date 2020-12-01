@@ -13,17 +13,55 @@
 	}
 }
 
+.landing-tutor-header {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+}
+
 .card-img-top {
 	width: 100%;
 	padding: 1em;
 	background-color: #f2f2f2;
 }
 
-.card-body {
+
+#deck-header {
+	margin-top: -3em;
+	margin-bottom: 1em;
+}
+
+#category-row{
+	margin-top: 5em;
+}
+
+#category-deck {
+	display: flex;
+	width: 100%;
+	flex-flow: row wrap;
 
 }
 
-#card-header {
-	margin-top: -3em;
-	margin-bottom: 1em;
+#category-deck .card {
+	width: 150px;
+	margin-left : 20px;
+	margin-right : 20px;
+	margin-bottom: 30px;
+
+
+}
+
+#profile-deck {
+	display: flex;
+	width: 100%;
+	flex-flow: row wrap;
+
+}
+
+#profile-deck .card {
+	width: 200px;
+	margin-left: 10px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+
 }

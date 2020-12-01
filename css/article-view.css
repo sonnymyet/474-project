@@ -1,11 +1,45 @@
 .article-container {
-    margin-top: 75px;
+    margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid rgba(0,0,0,.1);
     border-radius: 10px;
     background-color: white;
-    padding: 30px;
     min-width: 800px;
-    margin-bottom: 100px;
+    padding: 30px;
+}
+
+.article-header {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.article-desc {
+    width: 100%;
+}
+
+.article-outer-container {
+    background-color: #f9f9f9;
+    padding: 50px !important;
+}
+
+.article-title {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    width: 100%;
+    background-color: #343a40;
+    color: white;
+    height: 100px;
+    padding-top: 25px;
+    font-size: 35px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-bottom: 50px;
+}
+
+.back-btn {
+    margin-left: auto;
+    margin-right: auto;
 }
