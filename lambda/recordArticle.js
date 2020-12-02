@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT-0
 
 
-// Code modified from AWS WildRydes example for 474 Project. Modified by SM
+// Code modified from AWS WildRydes example for 474 Project. Modified by OR, SM
 
 const randomBytes = require('crypto').randomBytes;
 
@@ -10,14 +10,6 @@ const AWS = require('aws-sdk');
 
 const ddb = new AWS.DynamoDB.DocumentClient();
 
-const articleParam = {
-    TableName: 'Articles',
-    ProjectionExpression: "Category, Title, Content, UserProfile",
-    ReturnConsumedCapacity: "TOTAL"
-};
-
-var articles = [];
-var articleCount; 
 
 exports.handler = (event, context, callback) => {
     if (!event.requestContext.authorizer) {
@@ -25,8 +17,8 @@ exports.handler = (event, context, callback) => {
       return;
     }
 
-    const requestId = toUrlString(randomBytes(16));
-    console.log('Received event (', requestId, '): ', event);
+    const articleId = toUrlString(randomBytes(16));
+    console.log('Received event (', articleId, '): ', event);
 
     // Because we're using a Cognito User Pools authorizer, all of the claims
     // included in the authentication token are provided in the request context.
@@ -37,13 +29,13 @@ exports.handler = (event, context, callback) => {
     // In order to extract meaningful values, we need to first parse this string
     // into an object. A more robust implementation might inspect the Content-Type
     // header first and use a different parsing strategy based on that value.
-    //const requestBody = JSON.parse(event.body);
+    const requestBody = JSON.parse(event.body);
 
-    //const article = requestBody.Article;
+    const article = requestBody.Article;
 
     //const unicorn = findUnicorn(article);
 
-    getArticle().then(() => {
+    recordArticle(articleId, username, article).then(() => {
         // You can use the callback function to provide a return value from your Node.js
         // Lambda functions. The first parameter is used for failed invocations. The
         // second parameter specifies the result data of the invocation.
@@ -53,8 +45,9 @@ exports.handler = (event, context, callback) => {
         callback(null, {
             statusCode: 201,
             body: JSON.stringify({
-                articleCount,
-                articles
+                ArticleId: articleId,
+                Eta: '30 seconds',
+                Email: username,
             }),
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -79,18 +72,18 @@ exports.handler = (event, context, callback) => {
 //     return fleet[Math.floor(Math.random() * fleet.length)];
 // }
 
-function getArticle() {
-    return ddb.scan(articleParam, function(err, data){
-        if (err){
-            console.log("Error", err);
-        }
-        else{
-            console.log("Success", data);
-            articleCount = data.Count;
-            articles = data.Items;
-            console.log("Test", articles);
-
-        }
+function recordArticle(articleId, username, article) {
+    return ddb.put({
+        TableName: 'Articles',
+        Item: {
+            ArticleId: articleId,
+            Author: username,
+            Title: article.Title,
+            //Category: article.Category,
+            Content: article.Content,
+            //TagID: article.TagID,
+            RequestTime: new Date().toISOString(),
+        },
     }).promise();
 }
 

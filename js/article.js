@@ -41,6 +41,32 @@ var WildRydes = window.WildRydes || {};
         });
     }
 
+    function createArticle(articleTitle, content){
+        $.ajax({
+            method: 'POST',
+            url: _config.api.invokeUrl + '/article',
+            headers: {
+                Authorization: authToken
+            },
+            data: JSON.stringify({
+                Article: {
+                    Title: articleTitle,
+                    //Category: categoryID,
+                    Content: content,
+                    //TagID: tagID
+                }
+            }),
+            contentType: 'json',
+            success: function(){
+                console.log("success");
+            },
+            error: function ajaxError(jqXHR) {
+                console.error('Response: ', jqXHR.responseText);
+                alert('An error occured when requesting your unicorn:\n' + jqXHR.responseText);
+            }
+        });
+    }
+
     function completeRequest(result) {
 
         console.log('Response received from API: ', result);
@@ -54,7 +80,7 @@ var WildRydes = window.WildRydes || {};
 
     // Register click handler for #request button
     $(function onDocReady() {
-        // $('#request2').click(handleRequestClick);
+        $('#createArticle').click(handleSubmitClick);
         // $('#profileTest').click(handleCards);
 
 
@@ -70,6 +96,16 @@ var WildRydes = window.WildRydes || {};
         }*/
     });
 
+    function handleSubmitClick(event) {
+        var articleTitle = document.getElementById('articleTitle').value;
+        //var categoryID = document.getElementById('roleUpdate').value;
+        //var tagID = document.getElementById('tagUpdate').value;
+        let get_desc = $('#form_desc').val();
+        createArticle(articleTitle, get_desc);
+     
+        event.preventDefault();
+
+    }
 
     function handleRequestClick(event) {
 
@@ -87,26 +123,28 @@ var WildRydes = window.WildRydes || {};
 
     }
 
+    
+
     function addCard(item) {
 
         //event.preventDefault();
-        var inputProfileKey = item.ProfileKey;
-        var inputName = item.Details.Name;
-        var inputContactInfo = item.Details.Email;
-        var inputPic = item.Details.ProfilePic;
-        var inputDescription = item.Details.Description;
+        var inputKey = item.ArticleId;
+        var inputTitle = item.Title;
+        var inputContent = item.Content;
+        var inputContactInfo = item.Author;
+        //var inputPic = item.UserProfile.ProfilePic;
 
-        inputPic = "images/wr-investors-2.png";
+        var inputPic = "images/wr-investors-2.png";
 
         var cardImage = "<img src='" + inputPic + "' class='card-img-top' alt='...'>";
-        var cardTitle = "<h5 class='card-title' id='profileName'>" + inputName + "</h5>";
-        var cardText = "<p class='card-text' id='profileText'>" + inputDescription + "</br> Contact: " + inputContactInfo + "</p>";
+        var cardTitle = "<h5 class='card-title' id='profileName'>" + inputTitle + "</h5>";
+        var cardText = "<p class='card-text' id='profileText'>" + inputContent + "</br> </br> Author: " + inputContactInfo + "</p>";
         var cardBody = "<div class='card-body'>" + cardTitle + cardText + "</div>";
-        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' type='submit' value='" + inputProfileKey + "'> View </button>";
+        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' type='submit' value='" + inputKey + "'> View </button>";
         var cardFooter = "<div class='card-footer'>" + cardButton + "</div>";
-        var cardWrap = "<div class='card'>" + cardImage + cardBody + cardFooter + "</div>";
+        var cardWrap = "<div class='card'>" + cardBody + cardFooter + "</div>";
 
-        $('#profile-deck').append(cardWrap);
+        $('#article-deck').append(cardWrap);
 
     }
 
