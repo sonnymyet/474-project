@@ -81,7 +81,7 @@ var WildRydes = window.WildRydes || {};
     // Register click handler for #request button
     $(function onDocReady() {
         $('#createArticle').click(handleSubmitClick);
-        // $('#profileTest').click(handleCards);
+        $('#viewArticle').click(handleRequestClick);
 
 
         WildRydes.authToken.then(function updateAuthMessage(token) {
@@ -110,8 +110,8 @@ var WildRydes = window.WildRydes || {};
     function handleRequestClick(event) {
 
         event.preventDefault();
-        requestArticle();
-        alert("Category js click");
+        //requestArticle();
+        alert("View Article clicked");
 
     }
 
@@ -140,7 +140,7 @@ var WildRydes = window.WildRydes || {};
         var cardTitle = "<h5 class='card-title' id='profileName'>" + inputTitle + "</h5>";
         var cardText = "<p class='card-text' id='profileText'>" + inputContent + "</br> </br> Author: " + inputContactInfo + "</p>";
         var cardBody = "<div class='card-body'>" + cardTitle + cardText + "</div>";
-        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' type='submit' value='" + inputKey + "'> View </button>";
+        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' id='viewArticle' type='submit' value='" + inputKey + "'> View </button>";
         var cardFooter = "<div class='card-footer'>" + cardButton + "</div>";
         var cardWrap = "<div class='card'>" + cardBody + cardFooter + "</div>";
 

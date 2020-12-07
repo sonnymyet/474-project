@@ -12,7 +12,7 @@ const ddb = new AWS.DynamoDB.DocumentClient();
 
 const articleParam = {
     TableName: 'Articles',
-    ProjectionExpression: "Category, Title, Content, UserProfile",
+    ProjectionExpression: "ArticleId, Category, Title, Content, UserProfile",
     ReturnConsumedCapacity: "TOTAL"
 };
 
