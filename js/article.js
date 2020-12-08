@@ -91,12 +91,20 @@ var WildRydes = window.WildRydes || {};
 
     function completeRequest(result) {
 
-        //console.log('Response received from API: ', result);
+        console.log('Result: ', result);
 
         var articles = [];
         articles = result.articles;
+        
+        // console.log('Before Sort: ', articles);
+
+        articles.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.CreatedTime) - new Date(a.CreatedTime);
+        });
         articles.forEach(addCard);
-        //console.log('Response received from API: ', articles);
+        console.log('Result articles: ', articles);
 
     }
 

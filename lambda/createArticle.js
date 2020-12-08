@@ -33,7 +33,6 @@ exports.handler = (event, context, callback) => {
 
     const article = requestBody.Article;
 
-    //const unicorn = findUnicorn(article);
 
     recordArticle(articleId, username, article).then(() => {
         // You can use the callback function to provide a return value from your Node.js
@@ -45,7 +44,8 @@ exports.handler = (event, context, callback) => {
         callback(null, {
             statusCode: 201,
             body: JSON.stringify({
-                ArticleId: articleId
+                ArticleId: articleId,
+                Status: 'sucess'
             }),
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -62,13 +62,6 @@ exports.handler = (event, context, callback) => {
     });
 };
 
-// This is where you would implement logic to find the optimal unicorn for
-// this ride (possibly invoking another Lambda function as a microservice.)
-// For simplicity, we'll just pick a unicorn at random.
-// function findUnicorn(article) {
-//     console.log('Finding unicorn for ', article.Heading, ', ', article.Topic);
-//     return fleet[Math.floor(Math.random() * fleet.length)];
-// }
 
 function recordArticle(articleId, username, article) {
     return ddb.put({
@@ -77,10 +70,8 @@ function recordArticle(articleId, username, article) {
             ArticleId: articleId,
             Author: username,
             Title: article.Title,
-            //Category: article.Category,
             Content: article.Content,
-            //TagID: article.TagID,
-            RequestTime: new Date().toISOString(),
+            CreatedTime: new Date().toISOString(),
         },
     }).promise();
 }

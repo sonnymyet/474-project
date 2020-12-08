@@ -12,7 +12,7 @@ const ddb = new AWS.DynamoDB.DocumentClient();
 
 const articleParam = {
     TableName: 'Articles',
-    ProjectionExpression: "ArticleId, Category, Title, Content, UserProfile, Author",
+    //ProjectionExpression: "ArticleId, Category, Title, Content, UserProfile, Author, CreatedTime",
     ReturnConsumedCapacity: "TOTAL"
 };
 
@@ -109,7 +109,7 @@ function errorResponse(errorMessage, awsRequestId, callback) {
       Reference: awsRequestId,
     }),
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
     },
   });
 }
