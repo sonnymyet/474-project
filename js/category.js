@@ -47,6 +47,12 @@ var WildRydes = window.WildRydes || {};
 
         var categories = [];
         categories = result.categories;
+
+        categories.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return a.Title.localeCompare(b.Title);
+        });
         categories.forEach(addCard);
         //console.log('Response received from API: ', categories);
 
@@ -94,7 +100,7 @@ var WildRydes = window.WildRydes || {};
         var inputValue = item.CategoryId;
         var cardTitle = "<h5 class='card-title' id='categoryTitle'>" + inputTitle + "</h5>";
         var cardText = "<p class='card-text' id='categoryText'>" + inputValue + "</p>";
-        var cardBody = "<div class='card-body'>" + cardTitle + cardText + "</div>";
+        var cardBody = "<div class='card-body'>" + cardTitle + "</div>";
         var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' type='submit' value='" + inputValue + "'> View </button>";
         var cardFooter = "<div class='card-footer'>" + cardButton + "</div>";
         var cardWrap = "<div class='card'>" + cardBody + cardFooter + "</div>";

@@ -69,6 +69,11 @@ var WildRydes = window.WildRydes || {};
 
         var profiles = [];
         profiles = result.profiles;
+        profiles.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return a.Details.Name.localeCompare(b.Details.Name);
+        });
         profiles.forEach(addCard);
         //console.log('Response received from API: ', profiles);
 
