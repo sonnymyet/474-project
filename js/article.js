@@ -216,20 +216,21 @@ var WildRydes = window.WildRydes || {};
         var inputContactInfo = toEmail(item.Author);
  
 
-        var cardTitle = "<h1 class='card-title'>" + inputTitle + "</h1>";
+        var cardTitle = "<h1 class='card-header'>" + inputTitle + "</h1>";
         var cardText = "<p class='card-text'>" + inputContent + "</p>";
         var cardBody = "<div class='card-body'>" + cardText + "</div>";
         var cardAuthor = "<h6 class='card-author'> Author: " + inputContactInfo + "</h6>";
 
         var backButton = "<button class='btn btn-sm btn-outline-info btn-block backButton' type='button' name='backBtn' value='" + inputKey + "'> Back </button>";
         var cardFooter = "<div class='card-footer'>" + backButton + "</div>";
-        var cardWrap = "<div class='card loaded-card' id='" + inputKey + "'>" + cardBody + cardAuthor + cardFooter + "</div>";
+        var cardWrap = "<div class='card loaded-card' id='" + inputKey + "'>" + cardTitle + cardBody + cardAuthor + cardFooter + "</div>";
 
-        $('#load-article').append(cardTitle);
+        //$('#load-article').append(cardTitle);
         $('#load-article').append(cardWrap);
 
 
         $('.row').not('#load-row').slideToggle();
+        $('.featurette-divider').not('#last-divider').slideToggle();
       
 
 
@@ -244,8 +245,9 @@ var WildRydes = window.WildRydes || {};
         let articleId = $(this).attr("value");
 
         $('#' + articleId).remove();
-        $('h1.card-title').remove();
+        //$('h1.card-title').remove();
         $('.row').not('#load-row').slideToggle();
+        $('.featurette-divider').not('#last-divider').slideToggle();
 
     }
 

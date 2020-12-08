@@ -43,12 +43,12 @@ var WildRydes = window.WildRydes || {};
 
     function completeRequest(result) {
 
-        console.log('Response received from API: ', result);
+        //console.log('Response received from API: ', result);
 
         var categories = [];
         categories = result.categories;
         categories.forEach(addCard);
-        console.log('Response received from API: ', categories);
+        //console.log('Response received from API: ', categories);
 
     }
 
