@@ -56,7 +56,7 @@ var WildRydes = window.WildRydes || {};
         WildRydes.authToken.then(function updateAuthMessage(token) {
             if (token) {
                 $('.authToken').text(token);
-                handleLogin();
+                //handleLogin();
             }
         });
 /*

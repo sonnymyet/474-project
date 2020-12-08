@@ -34,38 +34,61 @@ var WildRydes = window.WildRydes || {};
             contentType: 'json',
             success: completeRequest,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
-                console.error('Error requesting category: ', textStatus, ', Details: ', errorThrown);
+                console.error('Error requesting article: ', textStatus, ', Details: ', errorThrown);
                 console.error('Response: ', jqXHR.responseText);
-                alert('An error occured when requesting your category:\n' + jqXHR.responseText);
+                alert('An error occured when requesting your article:\n' + jqXHR.responseText);
             }
         });
     }
 
-    function createArticle(articleTitle, content){
+
+    function getArticle(articleId) {
         $.ajax({
-            method: 'POST',
-            url: _config.api.invokeUrl + '/article',
+            method: 'GET',
+            url: _config.api.invokeUrl + '/articles',
             headers: {
                 Authorization: authToken
             },
             data: JSON.stringify({
                 Article: {
-                    Title: articleTitle,
-                    //Category: categoryID,
-                    Content: content,
-                    //TagID: tagID
+                    Id: articleId
                 }
             }),
-            contentType: 'json',
-            success: function(){
-                console.log("success");
-            },
-            error: function ajaxError(jqXHR) {
+            contentType: 'application/json',
+            success: returnArticle,
+            error: function ajaxError(jqXHR, textStatus, errorThrown) {
+                console.error('Error requesting article: ', textStatus, ', Details: ', errorThrown);
                 console.error('Response: ', jqXHR.responseText);
-                alert('An error occured when requesting your unicorn:\n' + jqXHR.responseText);
+                alert('An error occured when requesting your article:\n' + jqXHR.responseText);
             }
         });
     }
+
+    // function createArticle(articleTitle, content){
+    //     $.ajax({
+    //         method: 'POST',
+    //         url: _config.api.invokeUrl + '/article',
+    //         headers: {
+    //             Authorization: authToken
+    //         },
+    //         data: JSON.stringify({
+    //             Article: {
+    //                 Title: articleTitle,
+    //                 //Category: categoryID,
+    //                 Content: content,
+    //                 //TagID: tagID
+    //             }
+    //         }),
+    //         contentType: 'json',
+    //         success: function(){
+    //             console.log("success");
+    //         },
+    //         error: function ajaxError(jqXHR) {
+    //             console.error('Response: ', jqXHR.responseText);
+    //             alert('An error occured when requesting your unicorn:\n' + jqXHR.responseText);
+    //         }
+    //     });
+    // }
 
     function completeRequest(result) {
 
@@ -78,10 +101,24 @@ var WildRydes = window.WildRydes || {};
 
     }
 
+    function returnArticle(result) {
+
+        console.log('Response received from API: ', result);
+
+        var article;
+        article = result.article;
+
+        console.log('Response received from API: ', article);
+        window.location.href = "./article-view.html";
+
+
+    }
+
     // Register click handler for #request button
     $(function onDocReady() {
-        $('#createArticle').click(handleSubmitClick);
-        $('#viewArticle').click(handleRequestClick);
+        $('.request2').click(handleRequestClick);
+        //$('.viewArticle').click(handleRequestClick);
+        $('#article-deck').on('click', handleRequestClick);
 
 
         WildRydes.authToken.then(function updateAuthMessage(token) {
@@ -110,8 +147,9 @@ var WildRydes = window.WildRydes || {};
     function handleRequestClick(event) {
 
         event.preventDefault();
-        //requestArticle();
-        alert("View Article clicked");
+        let articleId = $(".viewArticle").val();
+        getArticle(articleId);
+        alert("View Article clicked" + articleId);
 
     }
 
@@ -122,6 +160,8 @@ var WildRydes = window.WildRydes || {};
         alert("Adding Cards");
 
     }
+
+
 
     
 
@@ -140,13 +180,26 @@ var WildRydes = window.WildRydes || {};
         var cardTitle = "<h5 class='card-title' id='profileName'>" + inputTitle + "</h5>";
         var cardText = "<p class='card-text' id='profileText'>" + inputContent + "</br> </br> Author: " + inputContactInfo + "</p>";
         var cardBody = "<div class='card-body'>" + cardTitle + cardText + "</div>";
-        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' id='viewArticle' type='submit' value='" + inputKey + "'> View </button>";
+        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block viewArticle' type='button' value='" + inputKey + "'> View </button>";
         var cardFooter = "<div class='card-footer'>" + cardButton + "</div>";
         var cardWrap = "<div class='card'>" + cardBody + cardFooter + "</div>";
 
         $('#article-deck').append(cardWrap);
 
     }
+
+
+    function displayArticle(item) {
+
+        var inputKey = item.ArticleId;
+        var inputTitle = item.Title;
+        var inputContent = item.Content;
+        
+
+        $('#article-title').append(inputTitle);
+
+    }
+
 
 
 }(jQuery));
