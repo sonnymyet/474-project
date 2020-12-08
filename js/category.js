@@ -61,7 +61,7 @@ var WildRydes = window.WildRydes || {};
     // Register click handler for #request button
     $(function onDocReady() {
         // $('#request2').click(handleRequestClick);
-        // $('#cardTest').click(handleCards);
+        $('#category-deck').on('click', 'button[name="categoryBtn"]', handleRequestClick);
 
 
         WildRydes.authToken.then(function updateAuthMessage(token) {
@@ -80,8 +80,8 @@ var WildRydes = window.WildRydes || {};
     function handleRequestClick(event) {
 
         event.preventDefault();
-        requestCategory();
-        alert("Category js click");
+        
+        alert("Feature coming soon...");
 
     }
 
@@ -101,7 +101,7 @@ var WildRydes = window.WildRydes || {};
         var cardTitle = "<h5 class='card-title' id='categoryTitle'>" + inputTitle + "</h5>";
         var cardText = "<p class='card-text' id='categoryText'>" + inputValue + "</p>";
         var cardBody = "<div class='card-body'>" + cardTitle + "</div>";
-        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' type='submit' value='" + inputValue + "'> View </button>";
+        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block' name='categoryBtn' type='submit' value='" + inputValue + "'> View </button>";
         var cardFooter = "<div class='card-footer'>" + cardButton + "</div>";
         var cardWrap = "<div class='card'>" + cardBody + cardFooter + "</div>";
 
