@@ -45,9 +45,7 @@ exports.handler = (event, context, callback) => {
         callback(null, {
             statusCode: 201,
             body: JSON.stringify({
-                ArticleId: articleId,
-                Eta: '30 seconds',
-                Email: username,
+                ArticleId: articleId
             }),
             headers: {
                 'Access-Control-Allow-Origin': '*',

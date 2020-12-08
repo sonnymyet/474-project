@@ -26,9 +26,8 @@ var WildRydes = window.WildRydes || {};
                 Authorization: authToken
             },
 /*            data: JSON.stringify({
-                Category: {
-                    Id: '0',
-                    Title: 'Category Title'
+                Article: {
+                    Id: articleId
                 }
             }),*/
             contentType: 'json',
@@ -44,16 +43,16 @@ var WildRydes = window.WildRydes || {};
 
     function getArticle(articleId) {
         $.ajax({
-            method: 'GET',
+            method: 'POST',
             url: _config.api.invokeUrl + '/articles',
             headers: {
                 Authorization: authToken
             },
-            data: {
+            data: JSON.stringify({
                 Article: {
                     Id: articleId
                 }
-            },
+            }),
             contentType: 'json',
             success: returnArticle,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
@@ -92,23 +91,24 @@ var WildRydes = window.WildRydes || {};
 
     function completeRequest(result) {
 
-        console.log('Response received from API: ', result);
+        //console.log('Response received from API: ', result);
 
         var articles = [];
         articles = result.articles;
         articles.forEach(addCard);
-        console.log('Response received from API: ', articles);
+        //console.log('Response received from API: ', articles);
 
     }
 
     function returnArticle(result) {
 
-        console.log('Response received from API: ', result);
+        console.log('Result received from API: ', result);
 
         var article;
-        //article = result.article;
+        article = result.article;
 
-        console.log('Response received from API: ', article);
+        displayArticle(article);
+        console.log('Response received after API: ', article);
         //window.location.href = "./article-load.html";
 
 
@@ -116,9 +116,11 @@ var WildRydes = window.WildRydes || {};
 
     // Register click handler for #request button
     $(function onDocReady() {
-        //$('.request2').click(handleRequestClick);
-        //$('.viewArticle').click(handleRequestClick);
-        $('#article-deck').on('click', handleRequestClick);
+        //$('.cancleButton').click(handleCancleClick);
+        //$('button').on('click', handleRequestClick);
+        $('#article-deck').on('click', 'button[name="viewBtn"]', handleRequestClick);
+        $('#load-row').on('click', 'button[name="backBtn"]', handleCancleClick);
+        //$('.cancleButton').on('click', handleRequestClick);
 
 
         WildRydes.authToken.then(function updateAuthMessage(token) {
@@ -147,9 +149,11 @@ var WildRydes = window.WildRydes || {};
     function handleRequestClick(event) {
 
         event.preventDefault();
-        let articleId = $(".viewArticle").val();
+        //let articleId = $(this).attr("value");
+        let articleId = $(this).attr("value");
         getArticle(articleId);
-        alert("View Article clicked" + articleId);
+        //alert("View Article clicked, id: " + articleId);
+        console.log('Response sent to API: ', articleId);
 
     }
 
@@ -171,35 +175,71 @@ var WildRydes = window.WildRydes || {};
         var inputKey = item.ArticleId;
         var inputTitle = item.Title;
         var inputContent = item.Content;
-        var inputContactInfo = item.Author;
+        var inputContactInfo = toEmail(item.Author);
         //var inputPic = item.UserProfile.ProfilePic;
 
         var inputPic = "images/wr-investors-2.png";
 
+
         var cardImage = "<img src='" + inputPic + "' class='card-img-top' alt='...'>";
-        var cardTitle = "<h5 class='card-title' id='profileName'>" + inputTitle + "</h5>";
-        var cardText = "<p class='card-text' id='profileText'>" + inputContent + "</br> </br> Author: " + inputContactInfo + "</p>";
+        var cardTitle = "<h5 class='card-title'>" + inputTitle + "</h5>";
+        var cardText = "<p class='card-text'>" + inputContent + "</p>";
         var cardBody = "<div class='card-body'>" + cardTitle + cardText + "</div>";
-        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block viewArticle' type='button' value='" + inputKey + "'> View </button>";
-        var cardFooter = "<div class='card-footer'>" + cardButton + "</div>";
-        var cardWrap = "<div class='card'>" + cardBody + cardFooter + "</div>";
+        var cardButton = "<button class='btn btn-sm btn-outline-info btn-block viewArticle' type='button' name='viewBtn' value='" + inputKey + "'> View </button>";
+        //var backButton = "<button class='btn btn-sm btn-outline-info btn-block backButton' type='button' name='backBtn' value='" + inputKey + "'> Back </button>";
+        var cardFooter = "<div class='card-footer'> Author: " + inputContactInfo + cardButton + "</div>";
+        var cardWrap = "<div class='card article-card' id='" + inputKey + "'>" + cardBody + cardFooter + "</div>";
 
         $('#article-deck').append(cardWrap);
 
     }
 
+    function toEmail(username) {
+        return username.replace('-at-', '@');
+    }
+
 
     function displayArticle(item) {
 
+        //event.preventDefault();
         var inputKey = item.ArticleId;
         var inputTitle = item.Title;
         var inputContent = item.Content;
-        
+        var inputContactInfo = toEmail(item.Author);
+ 
 
-        $('#article-title').append(inputTitle);
+        var cardTitle = "<h1 class='card-title'>" + inputTitle + "</h1>";
+        var cardText = "<p class='card-text'>" + inputContent + "</p>";
+        var cardBody = "<div class='card-body'>" + cardText + "</div>";
+        var cardAuthor = "<h6 class='card-author'> Author: " + inputContactInfo + "</h6>";
+
+        var backButton = "<button class='btn btn-sm btn-outline-info btn-block backButton' type='button' name='backBtn' value='" + inputKey + "'> Back </button>";
+        var cardFooter = "<div class='card-footer'>" + backButton + "</div>";
+        var cardWrap = "<div class='card loaded-card' id='" + inputKey + "'>" + cardBody + cardAuthor + cardFooter + "</div>";
+
+        $('#load-article').append(cardTitle);
+        $('#load-article').append(cardWrap);
+
+
+        $('.row').not('#load-row').slideToggle();
+      
+
 
     }
 
+    function handleCancleClick(event) {
+
+        event.preventDefault();
+
+        //alert("Cancle Article");
+
+        let articleId = $(this).attr("value");
+
+        $('#' + articleId).remove();
+        $('h1.card-title').remove();
+        $('.row').not('#load-row').slideToggle();
+
+    }
 
 
 }(jQuery));

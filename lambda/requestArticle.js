@@ -10,8 +10,15 @@ const AWS = require('aws-sdk');
 
 const ddb = new AWS.DynamoDB.DocumentClient();
 
-var article;
+// const allArticleParam = {
+//     TableName: 'Articles',
+//     ProjectionExpression: "ArticleId, Category, Title, Content, UserProfile, Author",
+//     ReturnConsumedCapacity: "TOTAL"
+// };
 
+var article;
+//var articles = [];
+//var articleCount; 
 
 exports.handler = (event, context, callback) => {
     if (!event.requestContext.authorizer) {
@@ -31,14 +38,16 @@ exports.handler = (event, context, callback) => {
     // In order to extract meaningful values, we need to first parse this string
     // into an object. A more robust implementation might inspect the Content-Type
     // header first and use a different parsing strategy based on that value.
-    var requestBody = JSON.parse(event.body);
+    const requestBody = JSON.parse(event.body);
 
-    var requestArticleId = requestBody.Article.Id;
-  
+    const requestArticleId = requestBody.Article.Id;
+
+    //article = findArticle(requestArticleId);
+
     var articleParam = {
         TableName: 'Articles',
         Key: {'ArticleId': requestArticleId},
-        ProjectionExpression: "ArticleId, Category, Title, Content, UserProfile",
+        ProjectionExpression: "ArticleId, Author, Category, Title, Content, UserProfile",
         ReturnConsumedCapacity: "TOTAL"
     };
 
@@ -52,17 +61,13 @@ exports.handler = (event, context, callback) => {
         callback(null, {
             statusCode: 201,
             body: JSON.stringify({
-                // Article: {
-                //     Id: article.ArticleId,
-                //     Title: article.Title,
-                //     Content: article.Content
-                // }
+                //articleCount,
+                //articles,
                 article
             }),
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
-            contentType: 'json'
         });
     }).catch((err) => {
         console.error(err);
@@ -75,6 +80,14 @@ exports.handler = (event, context, callback) => {
     });
 };
 
+// This is where you would implement logic to find the optimal unicorn for
+// this ride (possibly invoking another Lambda function as a microservice.)
+// For simplicity, we'll just pick a unicorn at random.
+// function findArticle(id) {
+//     console.log('Finding article');
+
+//     return articles.find(element => element.ArticleId == id);
+// }
 
 function getArticle(articleParam) {
     return ddb.get(articleParam, function(err, data){
@@ -89,6 +102,21 @@ function getArticle(articleParam) {
         }
     }).promise();
 }
+
+// function getAllArticle() {
+//     return ddb.scan(allArticleParam, function(err, data){
+//         if (err){
+//             console.log("Error", err);
+//         }
+//         else{
+//             console.log("Success", data);
+//             articleCount = data.Count;
+//             articles = data.Items;
+//             console.log("Test", articles);
+
+//         }
+//     }).promise();
+// }
 
 function toUrlString(buffer) {
     return buffer.toString('base64')
@@ -105,7 +133,7 @@ function errorResponse(errorMessage, awsRequestId, callback) {
       Reference: awsRequestId,
     }),
     headers: {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     },
   });
 }
