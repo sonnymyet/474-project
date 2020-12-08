@@ -57,10 +57,11 @@ var WildRydes = window.WildRydes || {};
                 }
             }),
             contentType: 'application/json',
-            success: function(){
-                console.log("success");
-                window.location.href = "./home.html";
-            },
+            success: completeRequest,
+            // success: function(){
+            //     console.log("success");
+            //     window.location.href = "./home.html";
+            // },
             error: function ajaxError(jqXHR) {
                 console.error('Response: ', jqXHR.responseText);
                 alert('An error occured when posting your article:\n' + jqXHR.responseText);
@@ -71,11 +72,8 @@ var WildRydes = window.WildRydes || {};
     function completeRequest(result) {
 
         console.log('Response received from API: ', result);
+        window.location.href = "./home.html";
 
-        var articles = [];
-        articles = result.articles;
-        articles.forEach(addCard);
-        console.log('Response received from API: ', articles);
 
     }
 

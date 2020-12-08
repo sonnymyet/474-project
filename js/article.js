@@ -49,12 +49,13 @@ var WildRydes = window.WildRydes || {};
             headers: {
                 Authorization: authToken
             },
-            data: JSON.stringify({
-                Article: {
-                    Id: articleId
-                }
-            }),
-            contentType: 'application/json',
+            //content: articleId,
+            // data: {
+            //     Article: {
+            //         Id: articleId
+            //     }
+            // },
+            contentType: 'json',
             success: returnArticle,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
                 console.error('Error requesting article: ', textStatus, ', Details: ', errorThrown);
@@ -109,7 +110,7 @@ var WildRydes = window.WildRydes || {};
         article = result.article;
 
         console.log('Response received from API: ', article);
-        window.location.href = "./article-view.html";
+        //window.location.href = "./article-load.html";
 
 
     }
