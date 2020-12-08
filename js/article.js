@@ -49,12 +49,11 @@ var WildRydes = window.WildRydes || {};
             headers: {
                 Authorization: authToken
             },
-            //content: articleId,
-            // data: {
-            //     Article: {
-            //         Id: articleId
-            //     }
-            // },
+            data: {
+                Article: {
+                    Id: articleId
+                }
+            },
             contentType: 'json',
             success: returnArticle,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
@@ -107,7 +106,7 @@ var WildRydes = window.WildRydes || {};
         console.log('Response received from API: ', result);
 
         var article;
-        article = result.article;
+        //article = result.article;
 
         console.log('Response received from API: ', article);
         //window.location.href = "./article-load.html";
@@ -117,7 +116,7 @@ var WildRydes = window.WildRydes || {};
 
     // Register click handler for #request button
     $(function onDocReady() {
-        $('.request2').click(handleRequestClick);
+        //$('.request2').click(handleRequestClick);
         //$('.viewArticle').click(handleRequestClick);
         $('#article-deck').on('click', handleRequestClick);
 

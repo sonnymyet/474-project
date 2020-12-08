@@ -62,6 +62,7 @@ exports.handler = (event, context, callback) => {
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
+            contentType: 'json'
         });
     }).catch((err) => {
         console.error(err);
